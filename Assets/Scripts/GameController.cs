@@ -42,7 +42,7 @@ public class GameController : MonoBehaviour
 
             ortoSize = width + height - 5;
 
-            Mathf.Clamp(ortoSize, 6, 12);
+            Mathf.Clamp(ortoSize, 7, 12);
             
         }
         
