@@ -67,8 +67,8 @@ public class LineDrawer : MonoBehaviour
 
         float elapsedTime = 0f;
 
-        Vector3 fixedStartPoint = new Vector3(startPoint.x, 5f, startPoint.z);
-        Vector3 fixedEndPoint = new Vector3(endPoint.x, 5f, endPoint.z);
+        Vector3 fixedStartPoint = new Vector3(startPoint.x, 0.05f, startPoint.z);
+        Vector3 fixedEndPoint = new Vector3(endPoint.x, 0.05f, endPoint.z);
 
         while (elapsedTime < duration)
         {

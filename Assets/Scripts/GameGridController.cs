@@ -17,7 +17,7 @@ public class GameGridController : MonoBehaviour
     private GameObject[,] gameGrid;
     private Stack<GameObject>[,] inGameObjects;
     private GameObject[] frogs;
-    [SerializeField]private int maxFrogCount;
+    private int maxFrogCount;
     private System.Random random;
 
     private string[] borders;
@@ -27,19 +27,22 @@ public class GameGridController : MonoBehaviour
     private List<Vector3> startPoints;
     private List<Vector3> endPoints;
 
+    private float objectY=0.1f;
+
     void Start()
     {
         
     }
 
     //waits for the gameController before starting
-    public void StartGrid(int a, int b, int seed=1234)
+    public void StartGrid(int a, int b, int max,int seed=1234)
     {
         //using seeds the levels can be recreated if width,height and maxFrogCount is the same
         random = new System.Random(seed);
 
         width=a;
         height=b;
+        maxFrogCount = max;
         
         gameController = GameObject.Find("GameController").GetComponent<GameController>();
 
@@ -65,7 +68,8 @@ public class GameGridController : MonoBehaviour
             {
                 if(inGameObjects[x,y].Count!= 0)
                 {
-                    inGameObjects[x,y].Peek().transform.localPosition += new Vector3(0,10,0);
+                    inGameObjects[x,y].Peek().transform.localPosition += new Vector3(0,objectY+5,0);
+                    inGameObjects[x,y].Peek().SetActive(true);
                     int colorIndex = FindColor(inGameObjects[x,y].Peek().tag);
                     gameGrid[x,y].GetComponent<CellController>().SetCellColors(colorIndex);
                 } 
@@ -176,7 +180,7 @@ public class GameGridController : MonoBehaviour
         {
             for (int x = 0; x < width; x++)
             {   
-                //Initializing each stack inside the cells
+                //initializing each stack inside the cells
                 inGameObjects[x, z] = new Stack<GameObject>();
             }
         }
@@ -204,7 +208,11 @@ public class GameGridController : MonoBehaviour
 
         int no = random.Next(0,5);
         float correctRotation = CorrectRotation(randomx,randomy);
-        inGameObjects[randomx,randomy].Push(Instantiate(frogPrefab[no], new Vector3(randomx,-5,randomy), Quaternion.Euler(0,correctRotation,0)));
+
+        GameObject tempObject=Instantiate(frogPrefab[no], new Vector3(randomx,-5,randomy), Quaternion.Euler(0,correctRotation,0));
+        inGameObjects[randomx,randomy].Push(tempObject);
+        tempObject.SetActive(false);
+
         AddGrapes(correctRotation,randomx,randomy,no);
     }
 
@@ -239,6 +247,7 @@ public class GameGridController : MonoBehaviour
     //if a arrow gets added calls the overloaded AddGrapes function 
     private void AddGrapes(float rot,int a,int b,int no)
     {
+        GameObject tempObject;
         switch (rot)
         {
             //creates the grape line according to the frogs rotation
@@ -256,14 +265,18 @@ public class GameGridController : MonoBehaviour
                         if(a==0)randomRotation=270;
                         if(a==width-1)randomRotation=90;
                     }
-                    inGameObjects[a,i].Push(Instantiate(arrowCellPrefabs[no], gameGrid[a,i].transform.position + new Vector3(0,-5,0), Quaternion.Euler(0,randomRotation,0)));
+                    tempObject = Instantiate(arrowCellPrefabs[no], gameGrid[a,i].transform.position + new Vector3(0,-5,0), Quaternion.Euler(0,randomRotation,0));
+                    inGameObjects[a,i].Push(tempObject);
+                    tempObject.SetActive(false);
                     //gives the rotation and cord of the arrow
                     AddGrapes(randomRotation,a,i,no,a,i);
                     break;
                 }
                 else
                 {
-                    inGameObjects[a,i].Push(Instantiate(grapePrefabs[no], gameGrid[a,i].transform.position + new Vector3(0,-5,0), Quaternion.identity));
+                    tempObject = Instantiate(grapePrefabs[no], gameGrid[a,i].transform.position + new Vector3(0,-5,0), Quaternion.identity);
+                    inGameObjects[a,i].Push(tempObject);
+                    tempObject.SetActive(false);
                 }
             }
             break;
@@ -280,13 +293,17 @@ public class GameGridController : MonoBehaviour
                         if(b==0)randomRotation=180;
                         if(b==height-1)randomRotation=0;
                     }
-                    inGameObjects[i,b].Push(Instantiate(arrowCellPrefabs[no], gameGrid[i,b].transform.position + new Vector3(0,-5,0), Quaternion.Euler(0,randomRotation,0)));
+                    tempObject = Instantiate(arrowCellPrefabs[no], gameGrid[i,b].transform.position + new Vector3(0,-5,0), Quaternion.Euler(0,randomRotation,0));
+                    inGameObjects[i,b].Push(tempObject);
+                    tempObject.SetActive(false);
                     AddGrapes(randomRotation,i,b,no,i,b);
                     break;
                 }
                 else
                 {
-                    inGameObjects[i,b].Push(Instantiate(grapePrefabs[no], gameGrid[i,b].transform.position + new Vector3(0,-5,0), Quaternion.identity));
+                    tempObject = Instantiate(grapePrefabs[no], gameGrid[i,b].transform.position + new Vector3(0,-5,0), Quaternion.identity);
+                    inGameObjects[i,b].Push(tempObject);
+                    tempObject.SetActive(false);
                 }
             }
             break;
@@ -303,13 +320,17 @@ public class GameGridController : MonoBehaviour
                         if(a==0)randomRotation=270;
                         if(a==width-1)randomRotation=90;
                     }
-                    inGameObjects[a,i].Push(Instantiate(arrowCellPrefabs[no], gameGrid[a,i].transform.position + new Vector3(0,-5,0), Quaternion.Euler(0,randomRotation,0)));
+                    tempObject = Instantiate(arrowCellPrefabs[no], gameGrid[a,i].transform.position + new Vector3(0,-5,0), Quaternion.Euler(0,randomRotation,0));
+                    inGameObjects[a,i].Push(tempObject);
+                    tempObject.SetActive(false);
                     AddGrapes(randomRotation,a,i,no,a,i);
                     break;
                 }
                 else
                 {
-                    inGameObjects[a,i].Push(Instantiate(grapePrefabs[no], gameGrid[a,i].transform.position + new Vector3(0,-5,0), Quaternion.identity));
+                    tempObject = Instantiate(grapePrefabs[no], gameGrid[a,i].transform.position + new Vector3(0,-5,0), Quaternion.identity);
+                    inGameObjects[a,i].Push(tempObject);
+                    tempObject.SetActive(false);
                 }
             }
             break;
@@ -326,13 +347,17 @@ public class GameGridController : MonoBehaviour
                         if(b==0)randomRotation=180;
                         if(b==height-1)randomRotation=0;
                     }
-                    inGameObjects[i,b].Push(Instantiate(arrowCellPrefabs[no], gameGrid[i,b].transform.position + new Vector3(0,-5,0), Quaternion.Euler(0,randomRotation,0)));
+                    tempObject = Instantiate(arrowCellPrefabs[no], gameGrid[i,b].transform.position + new Vector3(0,-5,0), Quaternion.Euler(0,randomRotation,0));
+                    inGameObjects[i,b].Push(tempObject);
+                    tempObject.SetActive(false);
                     AddGrapes(randomRotation,i,b,no,i,b);
                     break;
                 }
                 else
                 {
-                    inGameObjects[i,b].Push(Instantiate(grapePrefabs[no], gameGrid[i,b].transform.position + new Vector3(0,-5,0), Quaternion.identity));
+                    tempObject = Instantiate(grapePrefabs[no], gameGrid[i,b].transform.position + new Vector3(0,-5,0), Quaternion.identity);
+                    inGameObjects[i,b].Push(tempObject);
+                    tempObject.SetActive(false);
                 } 
             }
             break;
@@ -342,31 +367,40 @@ public class GameGridController : MonoBehaviour
     //instead of a frog, grape line now gets created according to the arrow 
     private void AddGrapes(float rot,int a,int b,int no,int widthMax, int heightMax)
     {
+        GameObject tempObject;
         switch (rot)
         {   
             //now the switch bases the rotation on the arrow object
             case 0:
             for(int i = heightMax-1; i >= 0; i--)
             {
-                inGameObjects[a,i].Push(Instantiate(grapePrefabs[no], gameGrid[a,i].transform.position + new Vector3(0,-5,0), Quaternion.identity));
+                tempObject = Instantiate(grapePrefabs[no], gameGrid[a,i].transform.position + new Vector3(0,-5,0), Quaternion.identity);
+                inGameObjects[a,i].Push(tempObject);
+                tempObject.SetActive(false);
             }
             break;
             case 90:
             for(int i = widthMax-1; i >= 0; i--)
             {
-                inGameObjects[i,b].Push(Instantiate(grapePrefabs[no], gameGrid[i,b].transform.position + new Vector3(0,-5,0), Quaternion.identity));
+                tempObject = Instantiate(grapePrefabs[no], gameGrid[i,b].transform.position + new Vector3(0,-5,0), Quaternion.identity);
+                inGameObjects[i,b].Push(tempObject);
+                tempObject.SetActive(false);
             }
             break;
             case 180:
             for(int i = heightMax+1; i < height; i++)
             {
-                inGameObjects[a,i].Push(Instantiate(grapePrefabs[no], gameGrid[a,i].transform.position + new Vector3(0,-5,0), Quaternion.identity));
+                tempObject = Instantiate(grapePrefabs[no], gameGrid[a,i].transform.position + new Vector3(0,-5,0), Quaternion.identity);
+                inGameObjects[a,i].Push(tempObject);
+                tempObject.SetActive(false);
             }
             break;
             case 270:
             for(int i = widthMax+1; i < width; i++)
             {
-                inGameObjects[i,b].Push(Instantiate(grapePrefabs[no], gameGrid[i,b].transform.position + new Vector3(0,-5,0), Quaternion.identity));
+                tempObject = Instantiate(grapePrefabs[no], gameGrid[i,b].transform.position + new Vector3(0,-5,0), Quaternion.identity);
+                inGameObjects[i,b].Push(tempObject);
+                tempObject.SetActive(false);
             }
             break;
         }
@@ -601,12 +635,14 @@ public class GameGridController : MonoBehaviour
             destroyCordinates.Clear();
             print("wrongmove");
             gameController.setCanClick(true);
+            gameController.wrongMove();
+            gameController.PlayBuzz();
         }
     }
 
 private IEnumerator DestroyObjectsCoroutine()
 {
-    // Wait time is calculated according to how long the line is
+    //wait time is calculated according to how long the line is
     float waitTime = destroyCordinates.Count / 5;
 
     if (waitTime < 0.3f) waitTime = 0.3f;
@@ -616,30 +652,31 @@ private IEnumerator DestroyObjectsCoroutine()
 
     while (destroyCordinates.Count > 0)
     {
-        // Pops and destroy the top object and shows the new object
+        //pops and destroy the top object and shows the new object
         int cord = destroyCordinates.Pop();
         int b = cord % 10;
         int a = (cord - b) / 10;
 
         GameObject temp = inGameObjects[a, b].Pop();
 
-        // Call ScaleAndDestroy coroutine to scale up the object before destroying it
+        //call ScaleAndDestroy coroutine to scale up the object before destroying it
         yield return StartCoroutine(ScaleAndDestroy(temp));
 
         PlaySound();
 
         if (inGameObjects[a, b].Count > 0)
         {
-            inGameObjects[a, b].Peek().transform.position += new Vector3(0, 10, 0);
+            inGameObjects[a, b].Peek().transform.position += new Vector3(0,objectY+5, 0);
+            inGameObjects[a,b].Peek().SetActive(true);
             ChangeCellColor(a, b);
         }
         else ChangeCellColor(a, b);
 
-        // Yield a small delay before processing the next object destruction
+        //yield a small delay before processing the next object destruction
         if (destroyCordinates.Count > 0) yield return new WaitForSeconds(0.2f); 
     }
 
-    // Keeps track of frogs left as a win condition
+    //keeps track of frogs left as a win condition
     maxFrogCount--;
 
     if (maxFrogCount == 0)
@@ -657,15 +694,17 @@ private IEnumerator DestroyObjectsCoroutine()
     gameController.setCanClick(true);
 }
 
-// Coroutine to scale and destroy the object
+//coroutine to scale and destroy the object
 private IEnumerator ScaleAndDestroy(GameObject obj)
 {
     Vector3 originalScale = obj.transform.localScale;
-    Vector3 targetScale = originalScale * 1.5f; // Scale up to 1.5 times the original size
+    //scale up its the original size
+    Vector3 targetScale = originalScale * 1.5f;
     Vector3 originalPosition = obj.transform.position;
-    Vector3 targetPosition = originalPosition + new Vector3(0, 1, 0); // Move upward by 1 unit
+    //move upward by 1
+    Vector3 targetPosition = originalPosition + new Vector3(0, 1, 0);
 
-    float duration = 0.1f; // Duration of the animation
+    float duration = 0.1f;
     float elapsedTime = 0f;
 
     while (elapsedTime < duration)
@@ -673,18 +712,18 @@ private IEnumerator ScaleAndDestroy(GameObject obj)
         elapsedTime += Time.deltaTime;
         float t = elapsedTime / duration;
 
-        // Interpolate scale and position
+        //interpolate scale and position
         obj.transform.localScale = Vector3.Lerp(originalScale, targetScale, t);
         obj.transform.position = Vector3.Lerp(originalPosition, targetPosition, t);
 
         yield return null;
     }
 
-    // Ensure the final scale and position are set
+    //ensure the final scale and position are set
     obj.transform.localScale = targetScale;
     obj.transform.position = targetPosition;
 
-    // Destroy the object
+    //destroy the object
     Destroy(obj);
 }
 

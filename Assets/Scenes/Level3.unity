@@ -409,6 +409,7 @@ MonoBehaviour:
   seed: 1234
   width: 9
   height: 9
+  maxFrogCount: 30
   coloredCells:
   - {fileID: 2100000, guid: 72a7943154d34dd46883f83529b55faa, type: 2}
   - {fileID: 2100000, guid: aad2ba8a53ed8be42942bfe3129fa06f, type: 2}
@@ -416,9 +417,10 @@ MonoBehaviour:
   - {fileID: 2100000, guid: 254017a3478882148af46081ed54900f, type: 2}
   - {fileID: 2100000, guid: 7e62518992af1d54fbc3a79f70d105d5, type: 2}
   - {fileID: 2100000, guid: 9160f6e188674024b830abf5fb988379, type: 2}
-  extraClicks: 2
+  extraClicks: 5
   loseScreen: {fileID: 133872827}
   winScreen: {fileID: 974572247}
+  ortoSize: 11
 --- !u!4 &366118959
 Transform:
   m_ObjectHideFlags: 0
@@ -734,7 +736,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: a91cedd8dd7e88d41b666eb608f96ebb, type: 3}
+  m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
@@ -848,7 +850,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   soundEffectSource: {fileID: 965968544}
-  yourSoundEffectClip: {fileID: 8300000, guid: a91cedd8dd7e88d41b666eb608f96ebb, type: 3}
+  grapeAudioClip: {fileID: 8300000, guid: a91cedd8dd7e88d41b666eb608f96ebb, type: 3}
+  buzzAudioClip: {fileID: 8300000, guid: ffa768617f48e094b9bca997c5804d73, type: 3}
 --- !u!1001 &974572246
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1128,7 +1131,6 @@ MonoBehaviour:
   - {fileID: 7288221223800239165, guid: 850975a3b8e567849ad4da00d259692b, type: 3}
   - {fileID: 606110195835039149, guid: dc8995cbb24f4ba4893b4c344a9fcdb6, type: 3}
   - {fileID: 7323633842433580654, guid: cef7693cb3a526943b95f66c2236e58a, type: 3}
-  maxFrogCount: 30
 --- !u!4 &1856456845
 Transform:
   m_ObjectHideFlags: 0

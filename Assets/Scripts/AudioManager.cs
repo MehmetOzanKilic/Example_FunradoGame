@@ -3,7 +3,9 @@ using UnityEngine;
 public class AudioManager : MonoBehaviour
 {
     public AudioSource soundEffectSource;
-    public AudioClip yourSoundEffectClip;
+    public AudioClip grapeAudioClip;
+
+    public AudioClip buzzAudioClip;
 
     void Start()
     {
@@ -12,15 +14,21 @@ public class AudioManager : MonoBehaviour
 
     public void PlaySoundEffect()
     {
-        if (soundEffectSource != null && yourSoundEffectClip != null)
+        if (soundEffectSource != null && grapeAudioClip != null)
         {
-            soundEffectSource.clip = yourSoundEffectClip;
+            soundEffectSource.clip = grapeAudioClip;
 
             soundEffectSource.Play();
         }
-        else
+    }
+
+    public void PlayBuzzEffect()
+    {
+        if (soundEffectSource != null && buzzAudioClip != null)
         {
-            Debug.LogWarning("Sound effect source or clip is not assigned!");
+            soundEffectSource.clip = buzzAudioClip;
+
+            soundEffectSource.Play();
         }
     }
 }

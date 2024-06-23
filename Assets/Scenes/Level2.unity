@@ -307,6 +307,7 @@ MonoBehaviour:
   seed: 123
   width: 8
   height: 6
+  maxFrogCount: 20
   coloredCells:
   - {fileID: 2100000, guid: 72a7943154d34dd46883f83529b55faa, type: 2}
   - {fileID: 2100000, guid: aad2ba8a53ed8be42942bfe3129fa06f, type: 2}
@@ -314,9 +315,10 @@ MonoBehaviour:
   - {fileID: 2100000, guid: 254017a3478882148af46081ed54900f, type: 2}
   - {fileID: 2100000, guid: 7e62518992af1d54fbc3a79f70d105d5, type: 2}
   - {fileID: 2100000, guid: 9160f6e188674024b830abf5fb988379, type: 2}
-  extraClicks: 2
+  extraClicks: 5
   loseScreen: {fileID: 2067508072}
   winScreen: {fileID: 794321392}
+  ortoSize: 7
 --- !u!4 &366118959
 Transform:
   m_ObjectHideFlags: 0
@@ -756,7 +758,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   soundEffectSource: {fileID: 965968544}
-  yourSoundEffectClip: {fileID: 8300000, guid: a91cedd8dd7e88d41b666eb608f96ebb, type: 3}
+  grapeAudioClip: {fileID: 8300000, guid: a91cedd8dd7e88d41b666eb608f96ebb, type: 3}
+  buzzAudioClip: {fileID: 8300000, guid: ffa768617f48e094b9bca997c5804d73, type: 3}
 --- !u!114 &1328616387 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6909986097107662617, guid: 84ce920b8a8296c4381604fca84c02a4, type: 3}
@@ -816,7 +819,6 @@ MonoBehaviour:
   - {fileID: 7288221223800239165, guid: 850975a3b8e567849ad4da00d259692b, type: 3}
   - {fileID: 606110195835039149, guid: dc8995cbb24f4ba4893b4c344a9fcdb6, type: 3}
   - {fileID: 7323633842433580654, guid: cef7693cb3a526943b95f66c2236e58a, type: 3}
-  maxFrogCount: 20
 --- !u!4 &1856456845
 Transform:
   m_ObjectHideFlags: 0
